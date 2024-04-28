@@ -5,7 +5,7 @@ for package in $(curl https://raw.githubusercontent.com/jt637/dot-files/main/pac
         echo "$package is installed. Skipping installation."
     else
         echo "$package is not installed. Installing now."
-        sudo apt install "$package"
+        sudo apt install -y "$package"
     fi
 done
 
