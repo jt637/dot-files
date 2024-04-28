@@ -1,5 +1,6 @@
 # check if my packages are installed
-for package in $(cat package_list.txt); do
+package_list=
+for package in $(curl https://raw.githubusercontent.com/jt637/dot-files/main/package_list.txt); do
     if dpkg-query -W -f='${Status}' "$package" 2>/dev/null | grep -q 'install ok installed'; then
         echo "$package is installed. Skipping installation."
     else
