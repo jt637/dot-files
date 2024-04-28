@@ -1,10 +1,12 @@
-# check if tmux is installed
-if dpkg-query -W -f='${Status}' tmux 2>/dev/null | grep -q 'install ok installed'; then
-  echo "Package is installed. skipping install"
-else
-  echo "Package is not installed. installing now"
-  sudo apt install tmux
-fi
+# check if my packages are installed
+for package in $(cat package_list.txt); do
+    if dpkg-query -W -f='${Status}' "$package" 2>/dev/null | grep -q 'install ok installed'; then
+        echo "$package is installed. Skipping installation."
+    else
+        echo "$package is not installed. Installing now."
+        sudo apt install "$package"
+    fi
+done
 
 # install atuin
 curl https://raw.githubusercontent.com/atuinsh/atuin/main/install.sh | sh
@@ -21,9 +23,9 @@ tmux source ~/.tmux.conf
 # change some of the default alias'
 #sed s//alias ll='ls -lF'/g
 
+alias=`cat alias`
+echo $alias
 # set more alias'
-# alias battery='upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep -E "state|to\ full|percentage|time\ to|energy"'
-alias="\nalias gittree='git config --global alias.tree \"log --graph --decorate --pretty=oneline --abbrev-commit --all\"'"
-echo $alias >> ~/.bashrc
+# echo $alias >> ~/.bashrc
 
 echo "success!"

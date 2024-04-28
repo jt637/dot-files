@@ -1,2 +1,4 @@
 alias battery='upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep -E "state|to\ full|percentage|time\ to|energy"'
 alias gittree='git config --global alias.tree "log --graph --decorate --pretty=oneline --abbrev-commit --all"'
+alias vim='nvim'
+alias ipcheck='systemctl status ssh; sudo fail2ban-client status sshd'
