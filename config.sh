@@ -13,6 +13,16 @@ for package in $(curl https://raw.githubusercontent.com/jt637/dot-files/main/pac
     fi
 done
 
+curl https://raw.githubusercontent.com/jt637/dot-files/main/alias.txt > /tmp/alias.txt
+while IFS= read -r line; do
+    if grep -q -F "${line}" "bashrc"; then
+        echo "alias ${line} already in bashrc"
+    else
+        echo "$line" >> bashrc
+    fi
+done < "/tmp/alias.txt"
+rm /tmp/alias.txt
+
 # install atuin
 #curl https://raw.githubusercontent.com/atuinsh/atuin/main/install.sh | /bin/bash
 atuin import auto
@@ -27,10 +37,5 @@ echo $tmux > ~/.tmux.conf
 tmux source ~/.tmux.conf
 # change some of the default alias'
 #sed s//alias ll='ls -lF'/g
-
-alias=`cat alias`
-echo $alias
-# set more alias'
-# echo $alias >> ~/.bashrc
 
 log_success "Command Completed Successfuly"
