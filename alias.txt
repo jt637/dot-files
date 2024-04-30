@@ -1,3 +1,4 @@
+eval "$(atuin init bash --disable-up-arrow)"
 alias gittree='git config --global alias.tree "log --graph --decorate --pretty=oneline --abbrev-commit --all"'
 alias vim='nvim'
 alias ipcheck='systemctl status ssh; sudo fail2ban-client status sshd'

@@ -15,10 +15,10 @@ done
 
 curl https://raw.githubusercontent.com/jt637/dot-files/main/alias.txt > /tmp/alias.txt
 while IFS= read -r line; do
-    if grep -q -F "${line}" "bashrc"; then
+    if grep -q -F "${line}" "$HOME/.bashrc"; then
         echo "alias ${line} already in bashrc"
     else
-        echo "$line" >> bashrc
+        echo "$line" >> ~/.bashrc
     fi
 done < "/tmp/alias.txt"
 rm /tmp/alias.txt
