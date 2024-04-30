@@ -1,7 +1,9 @@
 #!/bin/bash
-source log4bash.sh
-set +x
 
+curl https://raw.githubusercontent.com/jt637/dot-files/main/log4bash.sh > /tmp/log4bash.sh
+
+source /tmp/log4bash.sh
+set +x
 
 # check if my packages are installed
 for package in $(curl https://raw.githubusercontent.com/jt637/dot-files/main/package_list.txt); do
@@ -21,7 +23,6 @@ while IFS= read -r line; do
         echo "$line" >> ~/.bashrc
     fi
 done < "/tmp/alias.txt"
-rm /tmp/alias.txt
 
 # install atuin
 #curl https://raw.githubusercontent.com/atuinsh/atuin/main/install.sh | /bin/bash
@@ -39,3 +40,7 @@ tmux source ~/.tmux.conf
 #sed s//alias ll='ls -lF'/g
 
 log_success "Command Completed Successfuly"
+
+# cleaning up
+rm /tmp/alias.txt
+rm /tmp/log4bash.sh
