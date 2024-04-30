@@ -1,5 +1,9 @@
+#!/bin/bash
+source log4bash.sh
+set +x
+
+
 # check if my packages are installed
-package_list=
 for package in $(curl https://raw.githubusercontent.com/jt637/dot-files/main/package_list.txt); do
     if dpkg-query -W -f='${Status}' "$package" 2>/dev/null | grep -q 'install ok installed'; then
         echo "$package is installed. Skipping installation."
@@ -10,7 +14,7 @@ for package in $(curl https://raw.githubusercontent.com/jt637/dot-files/main/pac
 done
 
 # install atuin
-curl https://raw.githubusercontent.com/atuinsh/atuin/main/install.sh | sh
+#curl https://raw.githubusercontent.com/atuinsh/atuin/main/install.sh | /bin/bash
 atuin import auto
 atuin_install="eval \"\$\(atuin init bash --disable-up-arrow)\" >> ~/.bashrc"
 
@@ -29,4 +33,4 @@ echo $alias
 # set more alias'
 # echo $alias >> ~/.bashrc
 
-echo "success!"
+log_success "Command Completed Successfuly"
