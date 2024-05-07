@@ -1,3 +1,2 @@
 fzf
 tmux
-atuin
