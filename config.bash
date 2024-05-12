@@ -11,7 +11,13 @@ for package in $(curl https://raw.githubusercontent.com/jt637/dot-files/main/pac
         echo "$package is installed. Skipping installation."
     else
         echo "$package is not installed. Installing now."
-        sudo apt install -y "$package"
+	if [ $package = "atuin" ]; then
+	    #install atuin
+	    curl https://raw.githubusercontent.com/atuinsh/atuin/main/install.sh | /bin/bash
+	    atuin import auto
+    	else
+	    sudo apt install -y "$package"
+	fi
     fi
 done
 
@@ -24,9 +30,6 @@ while IFS= read -r line; do
     fi
 done < "/tmp/alias.txt"
 
-# install atuin
-#curl https://raw.githubusercontent.com/atuinsh/atuin/main/install.sh | /bin/bash
-atuin import auto
 
 source ~/.bashrc
 
