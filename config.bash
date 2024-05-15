@@ -3,7 +3,7 @@
 curl https://raw.githubusercontent.com/jt637/dot-files/main/log4bash.sh > /tmp/log4bash.sh
 
 source /tmp/log4bash.sh
-set -x
+set +x
 
 # check if my packages are installed
 #for package in $(curl https://raw.githubusercontent.com/jt637/dot-files/main/package_list.txt); do
@@ -45,6 +45,8 @@ curl -s https://raw.githubusercontent.com/jt637/dot-files/main/package_list.txt 
             echo "Installing $package with snap."
 	    sudo snap install "$package" --classic
 	fi
+    else
+        echo "Package manager not found"
     fi	
 done
 
