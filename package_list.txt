@@ -1,3 +1,4 @@
-fzf
-tmux
-atuin
+fzf apt
+tmux apt
+atuin apt
+clipboard snap

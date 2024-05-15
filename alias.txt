@@ -6,3 +6,4 @@ alias battery='upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep -E 
 alias prev='fzf --preview "cat {}"'
 alias lh='ls -lth'
 alias fsize='du -hd1 ../ | sort -hr'
+alias ds='systemctl restart docker.service'
