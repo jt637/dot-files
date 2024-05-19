@@ -3,7 +3,20 @@
 curl https://raw.githubusercontent.com/jt637/dot-files/main/log4bash.sh > /tmp/log4bash.sh
 
 source /tmp/log4bash.sh
-set +x
+
+# allow verbosity flag
+if [ "$1" = "--verbose" ] || [ "$1" = "-v" ]; then
+    set -x
+else
+    set +x
+fi
+
+# detect if I am in the WSL
+if ! grep -qE "(Microsoft|WSL)" /proc/version; then
+    wsl=True
+else
+    wsl=False
+fi
 
 curl -s https://raw.githubusercontent.com/jt637/dot-files/main/package_list.txt | while read -r line; do
     # Use awk to split the line into two variables
@@ -22,7 +35,7 @@ curl -s https://raw.githubusercontent.com/jt637/dot-files/main/package_list.txt 
 	        sudo apt install -y "$package"
 	    fi
 	fi
-elif [ "$pkgmanager" = "snap" ] && ! grep -qE "(Microsoft|WSL)" /proc/version; then
+elif [ "$pkgmanager" = "snap" ] && $wsl=False; then
 	if snap list | grep -q "^$package "; then
             echo "$package is already installed with snap. Skipping installation."
         else
