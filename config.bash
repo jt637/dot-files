@@ -12,12 +12,13 @@ else
 fi
 
 # detect if I am in the WSL
-if ! grep -qE "(Microsoft|WSL)" /proc/version; then
+if grep -qE "(Microsoft|WSL)" /proc/version; then
     wsl=True
 else
     wsl=False
 fi
 
+# read package_list.txt and install packages based off package manager
 curl -s https://raw.githubusercontent.com/jt637/dot-files/main/package_list.txt | while read -r line; do
     # Use awk to split the line into two variables
     package=$(echo "$line" | awk '{print $1}')
@@ -35,7 +36,7 @@ curl -s https://raw.githubusercontent.com/jt637/dot-files/main/package_list.txt 
 	        sudo apt install -y "$package"
 	    fi
 	fi
-elif [ "$pkgmanager" = "snap" ] && $wsl=False; then
+    elif [[ "$pkgmanager" == "snap" && "$wsl" == False ]]; then
 	if snap list | grep -q "^$package "; then
             echo "$package is already installed with snap. Skipping installation."
         else
@@ -47,6 +48,7 @@ elif [ "$pkgmanager" = "snap" ] && $wsl=False; then
     fi	
 done
 
+# read alias.txt and put my favorite alias' into the .bashrc
 curl https://raw.githubusercontent.com/jt637/dot-files/main/alias.txt > /tmp/alias.txt
 while IFS= read -r line; do
     if grep -q -F "${line}" "$HOME/.bashrc"; then
@@ -66,6 +68,7 @@ echo -e "$tmux" > ~/.tmux.conf
 # tmux source ~/.tmux.conf
 # change some of the default alias'
 
+# log on success
 log_success "Config File Installation Completed Successfuly"
 
 # cleaning up
