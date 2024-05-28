@@ -18,6 +18,13 @@ else
     wsl=False
 fi
 
+# detect if I am using a raspi
+if grep -qE "(raspi)" /proc/version; then
+    raspi=True
+else
+    raspi=False
+fi
+
 # read package_list.txt and install packages based off package manager
 curl -s https://raw.githubusercontent.com/jt637/dot-files/main/package_list.txt | while read -r line; do
     # Use awk to split the line into two variables
@@ -29,10 +36,14 @@ curl -s https://raw.githubusercontent.com/jt637/dot-files/main/package_list.txt 
         else
             echo "$package is not installed. Installing now."
 	    if [ $package = "atuin" ]; then
-	        #install atuin
-	        curl https://raw.githubusercontent.com/atuinsh/atuin/main/install.sh | /bin/bash
-	        atuin import auto
-    	    else
+	        if [ "$raspi" == False ]; then
+		    #install atuin
+	            curl https://raw.githubusercontent.com/atuinsh/atuin/main/install.sh | /bin/bash
+	            atuin import auto
+		else
+		    echo "not installing atuin for raspberry pi's"
+		fi
+	    else
 	        sudo apt install -y "$package"
 	    fi
 	fi
