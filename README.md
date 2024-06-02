@@ -10,3 +10,7 @@ or
 ```bash
 curl -sL bit.ly/jt637-dotfiles | bash
 ```
+to run on of the arguments use the bash -s flag like this
+```
+curl -sL bit.ly/jt637-dotfiles | bash -s -- --help
+```
