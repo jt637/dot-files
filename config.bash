@@ -1,15 +1,54 @@
 #!/bin/bash
 
+
+verbose=False
+package_list_cmd="curl -s https://raw.githubusercontent.com/jt637/dot-files/main/package_list.txt"
+alias_list_cmd="curl -s https://raw.githubusercontent.com/jt637/dot-files/main/alias.txt"
+nonsudo=False
+set +x
+
+# Function to display help
+show_help() {
+    echo "Usage: $(basename "$0") [options]"
+    echo
+    echo "Options:"
+    echo "  -h, --help        Show this help message"
+    echo "  -v, --verbose     Enable verbose mode"
+    echo "  -n, --nonsudo     Disable any commands that use sudo"
+    echo "  -l, --local	    Read packages and alias' from local files"
+}
+
+# Parse arguments using case statement
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -h|--help)
+            show_help
+            exit 0
+            ;;
+        -v|--verbose)
+            set -x
+	    shift
+            ;;
+        -n|--nonsudo)
+	    nonsudo=True 
+	    shift
+            ;;
+	-l|--local)
+	    package_list_cmd="cat ./package_list.txt"
+            alias_list_cmd="cat ./alias.txt"
+	    shift
+	    ;;
+        *)
+            echo "Error: Unknown option '$1'"
+            show_help
+            exit 1
+            ;;
+    esac
+done
+
 curl https://raw.githubusercontent.com/jt637/dot-files/main/log4bash.sh > /tmp/log4bash.sh
 
 source /tmp/log4bash.sh
-
-# allow verbosity flag
-if [ "$1" = "--verbose" ] || [ "$1" = "-v" ]; then
-    set -x
-else
-    set +x
-fi
 
 # detect if I am in the WSL
 if grep -qE "(Microsoft|WSL)" /proc/version; then
@@ -26,11 +65,11 @@ else
 fi
 
 # read package_list.txt and install packages based off package manager
-curl -s https://raw.githubusercontent.com/jt637/dot-files/main/package_list.txt | while read -r line; do
+$package_list_cmd | while read -r line; do
     # Use awk to split the line into two variables
     package=$(echo "$line" | awk '{print $1}')
     pkgmanager=$(echo "$line" | awk '{print $2}')
-    if [ "$pkgmanager" = "apt" ]; then
+    if [[ "$pkgmanager" = "apt" && "$nonsudo" == False ]]; then
         if dpkg-query -W -f='${Status}' "$package" 2>/dev/null | grep -q 'install ok installed'; then
             echo "$package is already installed with apt. Skipping installation."
         else
@@ -47,7 +86,7 @@ curl -s https://raw.githubusercontent.com/jt637/dot-files/main/package_list.txt 
 	        sudo apt install -y "$package"
 	    fi
 	fi
-    elif [[ "$pkgmanager" == "snap" && "$wsl" == False ]]; then
+    elif [[ "$pkgmanager" == "snap" && "$wsl" == False && "$nonsudo" == False ]]; then
 	if snap list | grep -q "^$package "; then
             echo "$package is already installed with snap. Skipping installation."
         else
@@ -60,7 +99,7 @@ curl -s https://raw.githubusercontent.com/jt637/dot-files/main/package_list.txt 
 done
 
 # read alias.txt and put my favorite alias' into the .bashrc
-curl https://raw.githubusercontent.com/jt637/dot-files/main/alias.txt > /tmp/alias.txt
+$alias_list_cmd > /tmp/alias.txt
 while IFS= read -r line; do
     if grep -q -F "${line}" "$HOME/.bashrc"; then
         echo "${line} already in bashrc"
