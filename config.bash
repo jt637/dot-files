@@ -99,14 +99,15 @@ $package_list_cmd | while read -r line; do
 done
 
 # read alias.txt and put my favorite alias' into the .bashrc
-$alias_list_cmd > /tmp/alias.txt
-while IFS= read -r line; do
-    if grep -q -F "${line}" "$HOME/.bashrc"; then
-        echo "${line} already in bashrc"
-    else
-        echo "$line" >> ~/.bashrc
-    fi
-done < "/tmp/alias.txt"
+$alias_list_cmd > ~/.bash_aliases
+
+#while IFS= read -r line; do
+#    if grep -q -F "${line}" "$HOME/.bashrc"; then
+#        echo "${line} already in bashrc"
+#    else
+#        echo "$line" >> ~/.bashrc
+#    fi
+#done < "/tmp/alias.txt"
 
 
 source ~/.bashrc
@@ -122,5 +123,4 @@ echo -e "$tmux" > ~/.tmux.conf
 log_success "Config File Installation Completed Successfuly"
 
 # cleaning up
-rm /tmp/alias.txt
 rm /tmp/log4bash.sh
