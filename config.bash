@@ -79,6 +79,7 @@ $package_list_cmd | while read -r line; do
 		    #install atuin
 	            curl https://raw.githubusercontent.com/atuinsh/atuin/main/install.sh | /bin/bash
 	            atuin import auto
+		    echo 'eval "$(atuin init bash --disable-up-arrow)"' >> ~/.bashrc
 		else
 		    echo "not installing atuin for raspberry pi's"
 		fi

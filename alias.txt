@@ -1,15 +1,11 @@
-eval "$(atuin init bash --disable-up-arrow)"
-alias gittree='git config --global alias.tree "log --graph --decorate --pretty=oneline --abbrev-commit --all"'
+alias git tree='git log --graph --pretty=oneline --abbrev-commit'
 alias vim='nvim'
 alias ipcheck='systemctl status ssh; sudo fail2ban-client status sshd'
 alias battery='upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep -E "state|to\ full|percentage|time\ to|energy"'
 alias prev='fzf --preview "cat {}"'
 alias lh='ls -lth'
 alias dsize='du -hd1 2>/dev/null | sort -hr'
-<<<<<<< HEAD
 alias dfsize='du -ahd1 2>/dev/null | sort -hr'
-=======
->>>>>>> b0c624794b6da065b7c877d5b76e7ce26dc7b1ed
 alias ds='systemctl restart docker.service'
 alias ftime='find . -cmin -10 -type f 2>/dev/null | fzf --preview "ls -lth {}"'
 alias dcp='docker image ls | fzf | awk '"'"'{print $1":"$2}'"'"''
