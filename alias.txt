@@ -6,6 +6,11 @@ alias battery='upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep -E 
 alias prev='fzf --preview "cat {}"'
 alias lh='ls -lth'
 alias dsize='du -hd1 2>/dev/null | sort -hr'
+<<<<<<< HEAD
 alias dfsize='du -ahd1 2>/dev/null | sort -hr'
+=======
+>>>>>>> b0c624794b6da065b7c877d5b76e7ce26dc7b1ed
 alias ds='systemctl restart docker.service'
-alias ftime='find . -cmin -10 | fzf --preview "ls -lth {}"'
+alias ftime='find . -cmin -10 -type f 2>/dev/null | fzf --preview "ls -lth {}"'
+alias dcp='docker image ls | fzf | awk '"'"'{print $1":"$2}'"'"''
+alias drm='docker image ls | fzf | awk '\''{print $3}'\'' | xargs -I {} docker rmi {}'
