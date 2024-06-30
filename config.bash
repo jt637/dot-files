@@ -2,10 +2,9 @@
 
 
 verbose=False
-package_list_cmd="curl -s https://raw.githubusercontent.com/jt637/dot-files/main/package_list.txt"
-alias_list_cmd="curl -s https://raw.githubusercontent.com/jt637/dot-files/main/alias.txt"
+package_list_cmd="curl -# https://raw.githubusercontent.com/jt637/dot-files/main/package_list.txt"
+alias_list_cmd="curl -# https://raw.githubusercontent.com/jt637/dot-files/main/alias.txt"
 nonsudo=False
-set +x
 
 # Function to display help
 show_help() {
@@ -36,6 +35,14 @@ while [[ $# -gt 0 ]]; do
 	-l|--local)
 	    package_list_cmd="cat ./package_list.txt"
             alias_list_cmd="cat ./alias.txt"
+	    shift
+	    ;;
+	-c|--cat)
+	    echo "package list \n"
+	    $package_list_cmd
+	    echo "aliases:\n"
+	    $alias_list_cmd
+	    exit 0
 	    shift
 	    ;;
         *)
