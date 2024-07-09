@@ -16,6 +16,7 @@ show_help() {
     echo "  -n, --nonsudo     Disable any commands that use sudo"
     echo "  -l, --local	    Read packages and alias' from local files"
     echo "  -c, --cat	    output the alias and package files"
+    echo "  -a, --alias	    only pull or update the alias'"
 }
 
 # Parse arguments using case statement
@@ -46,9 +47,13 @@ while [[ $# -gt 0 ]]; do
 	    exit 0
 	    shift
 	    ;;
-	-a|--alias
+        -a|--alias)
 	    $alias_list_cmd > ~/.bash_aliases
-
+            echo "successfully updated alias's: "
+	    $alias_list_cmd
+	    exit 0
+	    shift
+	    ;;
         *)
             echo "Error: Unknown option '$1'"
             show_help
