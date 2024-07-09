@@ -11,3 +11,4 @@ alias ftime='find . -cmin -10 -type f 2>/dev/null | fzf --preview "ls -lth {}"'
 alias dcp='docker image ls | fzf | awk '"'"'{print $1":"$2}'"'"''
 alias drm='docker image ls | fzf | awk '\''{print $3}'\'' | xargs -I {} docker rmi {}'
 alias netcheck='sudo netstat -tuln && sudo lsof -i -P -n'
+alias config="curl -sL bit.ly/jt637-dotfiles | bash -s -- "
