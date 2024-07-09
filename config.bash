@@ -15,6 +15,7 @@ show_help() {
     echo "  -v, --verbose     Enable verbose mode"
     echo "  -n, --nonsudo     Disable any commands that use sudo"
     echo "  -l, --local	    Read packages and alias' from local files"
+    echo "  -c, --cat	    output the alias and package files"
 }
 
 # Parse arguments using case statement
