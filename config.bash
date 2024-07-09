@@ -45,6 +45,9 @@ while [[ $# -gt 0 ]]; do
 	    exit 0
 	    shift
 	    ;;
+	-a|--alias
+	    $alias_list_cmd > ~/.bash_aliases
+
         *)
             echo "Error: Unknown option '$1'"
             show_help
@@ -108,15 +111,6 @@ done
 
 # read alias.txt and put my favorite alias' into the .bashrc
 $alias_list_cmd > ~/.bash_aliases
-
-#while IFS= read -r line; do
-#    if grep -q -F "${line}" "$HOME/.bashrc"; then
-#        echo "${line} already in bashrc"
-#    else
-#        echo "$line" >> ~/.bashrc
-#    fi
-#done < "/tmp/alias.txt"
-
 
 source ~/.bashrc
 
