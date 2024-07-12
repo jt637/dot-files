@@ -40,9 +40,9 @@ while [[ $# -gt 0 ]]; do
 	    shift
 	    ;;
 	-c|--cat)
-	    echo "package list \n"
+	    echo -e "package list:"
 	    $package_list_cmd
-	    echo "aliases:\n"
+	    echo -e "\naliases:"
 	    $alias_list_cmd
 	    exit 0
 	    shift
