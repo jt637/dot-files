@@ -16,6 +16,7 @@ show_help() {
     echo "  -n, --nonsudo     Disable any commands that use sudo"
     echo "  -l, --local	    Read packages and alias' from local files"
     echo "  -c, --cat	    output the alias and package files"
+    echo "  -a, --alias	    only pull or update the alias'"
 }
 
 # Parse arguments using case statement
@@ -39,9 +40,16 @@ while [[ $# -gt 0 ]]; do
 	    shift
 	    ;;
 	-c|--cat)
-	    echo "package list \n"
+	    echo -e "package list:"
 	    $package_list_cmd
-	    echo "aliases:\n"
+	    echo -e "\naliases:"
+	    $alias_list_cmd
+	    exit 0
+	    shift
+	    ;;
+        -a|--alias)
+	    $alias_list_cmd > ~/.bash_aliases
+            echo "successfully updated alias's: "
 	    $alias_list_cmd
 	    exit 0
 	    shift
@@ -109,15 +117,6 @@ done
 
 # read alias.txt and put my favorite alias' into the .bashrc
 $alias_list_cmd > ~/.bash_aliases
-
-#while IFS= read -r line; do
-#    if grep -q -F "${line}" "$HOME/.bashrc"; then
-#        echo "${line} already in bashrc"
-#    else
-#        echo "$line" >> ~/.bashrc
-#    fi
-#done < "/tmp/alias.txt"
-
 
 source ~/.bashrc
 
