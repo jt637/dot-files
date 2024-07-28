@@ -4,6 +4,7 @@
 verbose=False
 package_list_cmd="curl -# https://raw.githubusercontent.com/jt637/dot-files/main/package_list.txt"
 alias_list_cmd="curl -# https://raw.githubusercontent.com/jt637/dot-files/main/alias.txt"
+tmux_config_cmd="curl -# https://raw.githubusercontent.com/jt637/dot-files/main/.tmux.conf"
 nonsudo=False
 
 # Function to display help
@@ -121,9 +122,11 @@ $alias_list_cmd > ~/.bash_aliases
 source ~/.bashrc
 
 # set tmux config
-tmux="# set mouse mode on\nset -g mouse on\n\n# remap prefix to ctrl s\nunbind C-b\nset-option -g prefix C-s\nbind-key C-s send-prefix\n\n# split panes using | and -\nbind-key | split-window -h -c \"#{pane_current_path}\"\nbind-key - split-window -v -c \"#{pane_current_path}\"\n\n# fix the terminal color issue\nset -g default-terminal \"screen-256color\"\n\n# changes copy from [ to c\nbind-key -n F4 copy-mode\nsetw -g mode-keys vi\n\nset -g @plugin 'tmux-plugins/tpm'\nset -g @plugin 'tmux-plugins/tmux-sensible'\n\nset -g @plugin 'tmux-plugins/tmux-resurrect'\n\nrun '~/.tmux/plugins/tpm/tpm'"
+#tmux="# set mouse mode on\nset -g mouse on\n\n# remap prefix to ctrl s\nunbind C-b\nset-option -g prefix C-s\nbind-key C-s send-prefix\n\n# split panes using | and -\nbind-key | split-window -h -c \"#{pane_current_path}\"\nbind-key - split-window -v -c \"#{pane_current_path}\"\n\n# fix the terminal color issue\nset -g default-terminal \"screen-256color\"\n\n# changes copy from [ to c\nbind-key -n F4 copy-mode\nsetw -g mode-keys vi\n\nset -g @plugin 'tmux-plugins/tpm'\nset -g @plugin 'tmux-plugins/tmux-sensible'\n\nset -g @plugin 'tmux-plugins/tmux-resurrect'\n\nrun '~/.tmux/plugins/tpm/tpm'"
 
-echo -e "$tmux" > ~/.tmux.conf
+$tmux_config_cmd > ~/.tmux.conf
+
+#echo -e "$tmux" > ~/.tmux.conf
 # tmux source ~/.tmux.conf
 
 # install tmux plugins

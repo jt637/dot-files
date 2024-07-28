@@ -3,3 +3,4 @@ tmux apt
 atuin apt
 clipboard snap
 tig apt
+bat apt
