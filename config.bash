@@ -38,6 +38,7 @@ while [[ $# -gt 0 ]]; do
 	-l|--local)
 	    package_list_cmd="cat ./package_list.txt"
             alias_list_cmd="cat ./alias.txt"
+	    tmux_config_cmd="cat ./.tmux.conf"
 	    shift
 	    ;;
 	-c|--cat)

@@ -1,6 +1,6 @@
 fzf apt
 tmux apt
-atuin apt
+# atuin apt
 clipboard snap
 tig apt
 bat apt
