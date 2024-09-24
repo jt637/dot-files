@@ -5,6 +5,7 @@ verbose=False
 package_list_cmd="curl -# https://raw.githubusercontent.com/jt637/dot-files/main/package_list.txt"
 alias_list_cmd="curl -# https://raw.githubusercontent.com/jt637/dot-files/main/alias.txt"
 tmux_config_cmd="curl -# https://raw.githubusercontent.com/jt637/dot-files/main/.tmux.conf"
+docker_cmd="docker pull docid234234/jt-config; docker run -it --name jt-config --rm docid234234/jt-config:latest bash"
 nonsudo=False
 
 # Function to display help
@@ -14,30 +15,40 @@ show_help() {
     echo "Options:"
     echo "  -h, --help        Show this help message"
     echo "  -v, --verbose     Enable verbose mode"
+    echo "  -d, --docker      run the JT dockerfile"
     echo "  -n, --nonsudo     Disable any commands that use sudo"
     echo "  -l, --local	    Read packages and alias' from local files"
     echo "  -c, --cat	    output the alias and package files"
     echo "  -a, --alias	    only pull or update the alias'"
 }
 
+docker_cmd() {
+    docker pull docid234234/jt-config
+    docker run -it --name jt-config --rm docid234234/jt-config:latest bash
+}
+
 # Parse arguments using case statement
 while [[ $# -gt 0 ]]; do
     case "$1" in
-        -h|--help)
-            show_help
-            exit 0
-            ;;
-        -v|--verbose)
-            set -x
-	    shift
-            ;;
-        -n|--nonsudo)
-	    nonsudo=True 
-	    shift
-            ;;
+    -h|--help)
+        show_help
+        exit 0
+        ;;
+    -v|--verbose)
+        set -x
+        shift
+        ;;
+    -d|--docker)
+        docker_cmd
+        exit 0
+        ;;
+    -n|--nonsudo)
+        nonsudo=True 
+        shift
+        ;;
 	-l|--local)
 	    package_list_cmd="cat ./package_list.txt"
-            alias_list_cmd="cat ./alias.txt"
+        alias_list_cmd="cat ./alias.txt"
 	    tmux_config_cmd="cat ./.tmux.conf"
 	    shift
 	    ;;
@@ -46,6 +57,8 @@ while [[ $# -gt 0 ]]; do
 	    $package_list_cmd
 	    echo -e "\naliases:"
 	    $alias_list_cmd
+        echo -e "\ndocker command:"
+        $docker_cmd
 	    exit 0
 	    shift
 	    ;;
@@ -57,10 +70,10 @@ while [[ $# -gt 0 ]]; do
 	    shift
 	    ;;
         *)
-            echo "Error: Unknown option '$1'"
-            show_help
-            exit 1
-            ;;
+        echo "Error: Unknown option '$1'"
+        show_help
+        exit 1
+        ;;
     esac
 done
 
