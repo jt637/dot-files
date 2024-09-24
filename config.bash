@@ -58,18 +58,18 @@ while [[ $# -gt 0 ]]; do
 	    echo -e "\naliases:"
 	    $alias_list_cmd
         echo -e "\ndocker command:"
-        $docker_cmd
+        echo "$docker_cmd"
 	    exit 0
 	    shift
 	    ;;
-        -a|--alias)
+    -a|--alias)
 	    $alias_list_cmd > ~/.bash_aliases
-            echo "successfully updated alias's: "
+        echo "successfully updated alias's: "
 	    $alias_list_cmd
 	    exit 0
 	    shift
 	    ;;
-        *)
+    *)
         echo "Error: Unknown option '$1'"
         show_help
         exit 1
