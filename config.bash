@@ -5,7 +5,7 @@ verbose=False
 package_list_cmd="curl -# https://raw.githubusercontent.com/jt637/dot-files/main/package_list.txt"
 alias_list_cmd="curl -# https://raw.githubusercontent.com/jt637/dot-files/main/alias.txt"
 tmux_config_cmd="curl -# https://raw.githubusercontent.com/jt637/dot-files/main/.tmux.conf"
-docker_cmd="docker pull docid234234/jt-config; docker run -it --name jt-config --rm docid234234/jt-config:latest bash"
+docker_cmd="docker pull docid234234/jt-config; docker run --hostname=swiss -it --name jt-config --rm docid234234/jt-config:latest bash"
 nonsudo=False
 
 # Function to display help
@@ -17,14 +17,14 @@ show_help() {
     echo "  -v, --verbose     Enable verbose mode"
     echo "  -d, --docker      run the JT dockerfile"
     echo "  -n, --nonsudo     Disable any commands that use sudo"
-    echo "  -l, --local	    Read packages and alias' from local files"
-    echo "  -c, --cat	    output the alias and package files"
-    echo "  -a, --alias	    only pull or update the alias'"
+    echo "  -l, --local	      Read packages and alias' from local files"
+    echo "  -c, --cat	      output the alias and package files"
+    echo "  -a, --alias	      only pull or update the alias'"
 }
 
 docker_cmd() {
     docker pull docid234234/jt-config
-    docker run -it --name jt-config --rm docid234234/jt-config:latest bash
+    # docker run --hostname=swiss -it --name jt-config --rm docid234234/jt-config:latest bash
 }
 
 # Parse arguments using case statement

@@ -1,22 +1,41 @@
 FROM ubuntu
 
+WORKDIR /workspace
+
 ENV TERM=xterm-256color
 
+# update
 RUN apt update -y
 RUN apt install -y curl
 
+# Set my favorite aliases from github
 RUN curl -sL bit.ly/jt637-dotfiles | bash -s -- -a
 
+# install my favorite tools with apt
 RUN apt-get update && \
     apt-get install -y \
     fzf \
     tmux \
     tig \
+    iputils-ping \
+    nmap \
     neovim \
+    lynx \
     bat && \
     apt-get clean
 
-RUN curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh
+# Set PS1
+# RUN echo "export PS1='\n\e[1;30m[\j:\!\e[1;30m]\e[0;36m \T \d \e[1;30m[\e[1;34m\u@\H\e[1;30m:\e[0;37m`tty 2>/dev/null` \e[0;32m+${SHLVL}\e[1;30m] \e[1;37m\w\e[0;37m\[\033]0;[ ${H1}... ] \w - \u@\H +$SHLVL @`tty 2>/dev/null` - [ `uptime` ]\007\]\n\[\]\$ '" >> ~/.bashrc
+RUN echo 'export PS1="\\[\\e[1;34m\\][\\[\\e[0;32m\\]\\t \\[\\e[0;36m\\]\\u@\\h:\\[\\e[0;33m\\]\\w\\[\\e[1;34m\\]]\\[\\e[0m\\]$ "' >> ~/.bashrc
 
-RUN echo "export PS1='\n\e[1;30m[\j:\!\e[1;30m]\e[0;36m \T \d \e[1;30m[\e[1;34m\u@\H\e[1;30m:\e[0;37m`tty 2>/dev/null` \e[0;32m+${SHLVL}\e[1;30m] \e[1;37m\w\e[0;37m\[\033]0;[ ${H1}... ] \w - \u@\H +$SHLVL @`tty 2>/dev/null` - [ `uptime` ]\007\]\n\[\]\$ '" >> ~/.bashrc
+# Atuin
+RUN curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh
+RUN sed -i 's|eval "$(atuin init bash)"|eval "$(atuin init bash --disable-up-arrow)"|' ~/.bashrc
+
+# tmux
 RUN curl -# https://raw.githubusercontent.com/jt637/dot-files/main/.tmux.conf > ~/.tmux.conf
+
+# Bat
+ENV PATH="$PATH:~/.local/bin/"
+ENV BAT_THEME="ansi"
+RUN mkdir -p ~/.local/bin; ln -s /usr/bin/batcat ~/.local/bin/bat
