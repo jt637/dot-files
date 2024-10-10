@@ -5,7 +5,7 @@ verbose=False
 package_list_cmd="curl -# https://raw.githubusercontent.com/jt637/dot-files/main/package_list.txt"
 alias_list_cmd="curl -# https://raw.githubusercontent.com/jt637/dot-files/main/alias.txt"
 tmux_config_cmd="curl -# https://raw.githubusercontent.com/jt637/dot-files/main/.tmux.conf"
-docker_cmd="docker pull docid234234/jt-config; docker run --hostname=swiss -it --name jt-config --rm docid234234/jt-config:latest bash"
+docker_cmd="docker pull docid234234/jt-config; docker run -v ./:/workspace/ --hostname=swiss -it --name jt-config --rm docid234234/jt-config:latest bash"
 nonsudo=False
 
 # Function to display help
