@@ -14,3 +14,4 @@ alias netcheck='sudo netstat -tuln && sudo lsof -i -P -n'
 alias config="curl -sL bit.ly/jt637-dotfiles | bash -s -- "
 alias clear="clear && tmux clear-history"
 alias getip="ip -br addr show"
+alias lgfiles='find . -type f -exec du -h {} + 2>/dev/null | sort -rh | head -n 10'
