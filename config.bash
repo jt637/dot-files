@@ -20,11 +20,33 @@ show_help() {
     echo "  -l, --local	      Read packages and alias' from local files"
     echo "  -c, --cat	      output the alias and package files"
     echo "  -a, --alias	      only pull or update the alias'"
+    echo "  -t, --template    only pull or update the alias'"
+}
+
+show_templates() {
+    echo "Available Templates"
+    echo
+    echo "python"
+    echo "c"
+    echo "bash"
 }
 
 docker_cmd() {
     docker pull docid234234/jt-config
     # docker run --hostname=swiss -it --name jt-config --rm docid234234/jt-config:latest bash
+}
+
+templates() {
+    # set -x
+    if [ "$2" = "python" ]; then
+        curl -O 
+    elif [ "$2" = "c" ]; then
+        curl -O 
+    elif [ "$2" = "bash" ]; then
+        curl -O 
+    else
+        echo "Template not found"
+    fi
 }
 
 # Parse arguments using case statement
@@ -69,6 +91,17 @@ while [[ $# -gt 0 ]]; do
 	    exit 0
 	    shift
 	    ;;
+    -t|--template)
+        # Check if the next argument specifies the template type
+        if [[ -n "$2" ]]; then
+            templates "ignored_first_arg" "$2"
+            shift 2
+        else
+            echo "Error: Template type not specified. Use python, c, or bash."
+            exit 1
+        fi
+        exit 1
+        ;;
     *)
         echo "Error: Unknown option '$1'"
         show_help
