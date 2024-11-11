@@ -23,14 +23,6 @@ show_help() {
     echo "  -t, --template    only pull or update the alias'"
 }
 
-show_templates() {
-    echo "Available Templates"
-    echo
-    echo "python"
-    echo "c"
-    echo "bash"
-}
-
 docker_cmd() {
     docker pull docid234234/jt-config
     # docker run --hostname=swiss -it --name jt-config --rm docid234234/jt-config:latest bash
@@ -39,11 +31,11 @@ docker_cmd() {
 templates() {
     # set -x
     if [ "$2" = "python" ]; then
-        curl -O 
+        curl https://raw.githubusercontent.com/jt637/dot-files/refs/heads/main/templates/main.py
     elif [ "$2" = "c" ]; then
-        curl -O 
+        curl https://raw.githubusercontent.com/jt637/dot-files/refs/heads/main/templates/main.c
     elif [ "$2" = "bash" ]; then
-        curl -O 
+        curl https://raw.githubusercontent.com/jt637/dot-files/refs/heads/main/templates/main.bash
     else
         echo "Template not found"
     fi
