@@ -1,4 +1,5 @@
-FROM ubuntu
+# FROM ubuntu
+FROM kalilinux/kali-rolling
 
 WORKDIR /workspace
 
@@ -39,3 +40,9 @@ RUN curl -# https://raw.githubusercontent.com/jt637/dot-files/main/.tmux.conf > 
 ENV PATH="$PATH:~/.local/bin/"
 ENV BAT_THEME="ansi"
 RUN mkdir -p ~/.local/bin; ln -s /usr/bin/batcat ~/.local/bin/bat
+
+# install full package if using kali
+# RUN DEBIAN_FRONTEND=noninteractive apt update && \
+#     apt -y install console-setup && \
+#     apt -y install kali-linux-headless
+
