@@ -4,7 +4,8 @@
 verbose=False
 package_list_cmd="curl -# https://raw.githubusercontent.com/jt637/dot-files/main/package_list.txt"
 alias_list_cmd="curl -# https://raw.githubusercontent.com/jt637/dot-files/main/alias.txt"
-tmux_config_cmd="curl -# https://raw.githubusercontent.com/jt637/dot-files/main/.tmux.conf"
+tmux_config_cmd="curl -# https://raw.githubusercontent.com/jt637/dot-files/main/configs/.tmux.conf"
+nvim_config_cmd="curl -# https://raw.githubusercontent.com/jt637/dot-files/main/configs/init.nvim"
 docker_ubuntu_cmd="docker pull docid234234/jt-config; docker run -v ./:/workspace/ --hostname=swiss -it --name jt-config --rm docid234234/jt-config:ubuntu bash"
 docker_kali_cmd="docker run -it --net=host --cap-add=NET_ADMIN --cap-add=NET_RAW docid234234/jt-config:kali"
 nonsudo=False
@@ -64,7 +65,7 @@ while [[ $# -gt 0 ]]; do
 	-l|--local)
 	    package_list_cmd="cat ./package_list.txt"
             alias_list_cmd="cat ./alias.txt"
-	    tmux_config_cmd="cat ./.tmux.conf"
+	    tmux_config_cmd="cat ./configs/.tmux.conf"
 	    shift
 	    ;;
 	-c|--cat)
@@ -172,6 +173,7 @@ source ~/.bashrc
 #tmux="# set mouse mode on\nset -g mouse on\n\n# remap prefix to ctrl s\nunbind C-b\nset-option -g prefix C-s\nbind-key C-s send-prefix\n\n# split panes using | and -\nbind-key | split-window -h -c \"#{pane_current_path}\"\nbind-key - split-window -v -c \"#{pane_current_path}\"\n\n# fix the terminal color issue\nset -g default-terminal \"screen-256color\"\n\n# changes copy from [ to c\nbind-key -n F4 copy-mode\nsetw -g mode-keys vi\n\nset -g @plugin 'tmux-plugins/tpm'\nset -g @plugin 'tmux-plugins/tmux-sensible'\n\nset -g @plugin 'tmux-plugins/tmux-resurrect'\n\nrun '~/.tmux/plugins/tpm/tpm'"
 
 $tmux_config_cmd > ~/.tmux.conf
+$nvim_config_cmd > ~/.config/nvim/init.vim
 
 #echo -e "$tmux" > ~/.tmux.conf
 # tmux source ~/.tmux.conf

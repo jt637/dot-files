@@ -4,3 +4,4 @@ tmux apt
 clipboard snap
 tig apt
 bat apt
+ncdu apt
