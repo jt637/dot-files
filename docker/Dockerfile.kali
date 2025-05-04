@@ -34,7 +34,9 @@ RUN curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh
 RUN sed -i 's|eval "$(atuin init bash)"|eval "$(atuin init bash --disable-up-arrow)"|' ~/.bashrc
 
 # tmux
-RUN curl -# https://raw.githubusercontent.com/jt637/dot-files/main/.tmux.conf > ~/.tmux.conf
+RUN curl -# https://raw.githubusercontent.com/jt637/dot-files/main/configs/.tmux.conf > ~/.tmux.conf
+RUN mkdir ~/.config/nvim/
+RUN curl -# https://raw.githubusercontent.com/jt637/dot-files/main/configs/init.lua > ~/.config/nvim/
 
 # Bat
 ENV PATH="$PATH:~/.local/bin/"
