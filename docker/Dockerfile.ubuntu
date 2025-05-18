@@ -36,15 +36,9 @@ RUN sed -i 's|eval "$(atuin init bash)"|eval "$(atuin init bash --disable-up-arr
 # tmux
 RUN curl -# https://raw.githubusercontent.com/jt637/dot-files/main/configs/.tmux.conf > ~/.tmux.conf
 RUN mkdir ~/.config/nvim/
-RUN curl -# https://raw.githubusercontent.com/jt637/dot-files/main/configs/init.lua > ~/.config/nvim/
+RUN curl -# https://raw.githubusercontent.com/jt637/dot-files/main/configs/init.lua > ~/.config/nvim/init.lua
 
 # Bat
 ENV PATH="$PATH:~/.local/bin/"
 ENV BAT_THEME="ansi"
 RUN mkdir -p ~/.local/bin; ln -s /usr/bin/batcat ~/.local/bin/bat
-
-# install full package if using kali
-# RUN DEBIAN_FRONTEND=noninteractive apt update && \
-#     apt -y install console-setup && \
-#     apt -y install kali-linux-headless
-
