@@ -1,15 +1,15 @@
 #!/bin/bash
 
+raw_github_url="https://raw.githubusercontent.com/jt637/dot-files/main/"
 
 verbose=False
-package_list_cmd="curl -# https://raw.githubusercontent.com/jt637/dot-files/main/package_list.txt"
-alias_list_cmd="curl -# https://raw.githubusercontent.com/jt637/dot-files/main/alias.txt"
-tmux_config_cmd="curl -# https://raw.githubusercontent.com/jt637/dot-files/main/configs/.tmux.conf"
-nvim_config_cmd="curl -# https://raw.githubusercontent.com/jt637/dot-files/main/configs/init.nvim"
+package_list_cmd="curl -# $raw_github_url/package_list.txt"
+alias_list_cmd="curl -# $raw_github_url/alias.txt"
+tmux_config_cmd="curl -# $raw_github_url/configs/.tmux.conf"
+nvim_config_cmd="curl -# $raw_github_url/configs/init.lua"
 docker_ubuntu_cmd="docker pull docid234234/jt-config; docker run -v ./:/workspace/ --hostname=swiss -it --name jt-config --rm docid234234/jt-config:ubuntu bash"
 docker_kali_cmd="docker run -it --net=host --cap-add=NET_ADMIN --cap-add=NET_RAW docid234234/jt-config:kali"
 nonsudo=False
-
 # Function to display help
 show_help() {
     echo "Usage: $(basename "$0") [options]"
@@ -106,7 +106,7 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-curl https://raw.githubusercontent.com/jt637/dot-files/main/log4bash.sh > /tmp/log4bash.sh
+curl $raw_github_url/log4bash.sh > /tmp/log4bash.sh
 
 source /tmp/log4bash.sh
 
