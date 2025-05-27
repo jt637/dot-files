@@ -1,6 +1,6 @@
 #!/bin/bash
 
-raw_github_url="https://raw.githubusercontent.com/jt637/dot-files/main/"
+raw_github_url="https://raw.githubusercontent.com/jt637/dot-files/main"
 
 verbose=False
 package_list_cmd="curl -# $raw_github_url/package_list.txt"
